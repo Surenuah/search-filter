@@ -6,12 +6,14 @@ import {Clothes} from "./clothes";
 function App() {
     const [query, setQuery] = useState("");
 
+    const keys = ["first_name", "last_name", "email"];
+
+    console.log(Clothes[0]["email"]);
+
     const Search = (data) => {
         return data.filter(
             (item) =>
-                item.first_name.toLowerCase().includes(query) ||
-                item.last_name.toLowerCase().includes(query) ||
-                item.email.toLowerCase().includes(query)
+                keys.some(key => item[key].toLowerCase().includes(query))
         );
     };
 
