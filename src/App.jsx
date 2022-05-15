@@ -1,19 +1,26 @@
 import './app.css';
-import {Clothes} from "./clothes";
 import {useState} from "react";
+import Table from "./Table";
+import {Clothes} from "./clothes";
 
 function App() {
-  const [query, setQuery] = useState("");
-  return (
-    <div className="app">
-      <input type="text" placeholder="Search..." className="search" onChange={e => setQuery(e.target.value)}/>
-      <ul className="list">
-          {Clothes.filter(user => user.first_name.toLowerCase().includes((query))).map((user) => (
-              <li key={user.id} className='listItem'>{user.first_name}</li>
-          ))}
-      </ul>
-    </div>
-  );
+    const [query, setQuery] = useState("");
+
+    const Search = (data) => {
+        return data.filter(
+            (item) =>
+                item.first_name.toLowerCase().includes(query) ||
+                item.last_name.toLowerCase().includes(query) ||
+                item.email.toLowerCase().includes(query)
+        );
+    };
+
+    return (
+        <div className="app">
+            <input type="text" placeholder="Search..." className="search" onChange={e => setQuery(e.target.value)}/>
+            <Table data={Search(Clothes)}/>
+        </div>
+    );
 }
 
 export default App;
